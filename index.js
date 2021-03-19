@@ -1,7 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+const graphqlHTTP = require("express-graphql");
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
+const expressPlayground = require("graphql-playground-middleware-express").default;
 
 import { connectToDB } from './database';
 
@@ -55,9 +57,21 @@ const startServer = async () => {
   });
 
   // Initiate express and define routes
-  const app = express();
-  app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
-  app.use('/', graphiqlExpress({ endpointURL: '/graphql' }));
+  // const app = express();
+  // app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
+  // app.use('/', graphiqlExpress({ endpointURL: '/graphql' }));
+
+  app.use(
+    "/graphql",
+    graphqlHTTP({
+      schema,
+      rootValue: resolvers,
+      context
+    })
+  );
+
+  //Graphql Playground route
+  app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
 
   // Initiate the server
   app.listen(process.env.PORT || 3000, () => {
