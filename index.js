@@ -77,7 +77,7 @@ const startServer = async () => {
     })
   );
   //Graphql Playground route
-  // app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
+  app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
 
   // Initiate the server
   //process.env.PORT || 3000
