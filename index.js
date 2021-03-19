@@ -61,7 +61,7 @@ const startServer = async () => {
   // const app = express();
   // app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
   // app.use('/', graphiqlExpress({ endpointURL: '/graphql' }));
-
+  const app = express();
   app.use(
     "/graphql",
     graphqlHTTP({
