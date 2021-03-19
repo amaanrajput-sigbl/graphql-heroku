@@ -62,26 +62,8 @@ const startServer = async () => {
   // app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
   // app.use('/', graphiqlExpress({ endpointURL: '/graphql' }));
   const app = express();
-  app.use(
-    "/graphql",
-    graphqlHTTP({
-      schema,
-      rootValue: resolvers,
-      context
-    })
-  );
 
-  //Graphql Playground route
-  app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
-
-  // Initiate the server
-  //process.env.PORT || 3000
-  app.listen(3000, () => {
-    console.log(`Server started on port: ${process.env.PORT || 3000}`);
-  });
-};
-
-// Connecting to DB and then start the server
+  // Connecting to DB and then start the server
 const dbConnectAndStartServer = async () => {
   try {
     await connectToDB();
@@ -95,3 +77,24 @@ const dbConnectAndStartServer = async () => {
 
 // Entry point
 dbConnectAndStartServer();
+
+  app.use(
+    "/graphql",
+    graphqlHTTP({
+      schema,
+      rootValue: resolvers,
+      dbConnectAndStartServer
+    })
+  );
+
+  //Graphql Playground route
+  app.get("/playground", expressPlayground({ endpoint: "/graphql" }));
+
+  // Initiate the server
+  //process.env.PORT || 3000
+  app.listen(3000, () => {
+    console.log(`Server started on port: ${process.env.PORT || 3000}`);
+  });
+};
+
+
