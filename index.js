@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-const graphqlHTTP = require("express-graphql");
+import graphqlHTTP  from "express-graphql";
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
 const expressPlayground = require("graphql-playground-middleware-express").default;
