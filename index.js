@@ -62,28 +62,12 @@ const startServer = async () => {
   // app.use('/graphql', bodyParser.json(), graphqlExpress({ schema }));
   // app.use('/', graphiqlExpress({ endpointURL: '/graphql' }));
   const app = express();
-
-  // Connecting to DB and then start the server
-const dbConnectAndStartServer = async () => {
-  try {
-    await connectToDB();
-    console.log('Connected to Mongo successfully');
-    startServer();
-  } catch (err) {
-    console.error(`Error connecting to mongo - ${err.message}`);
-    process.exit(1);
-  }
-};
-
-// Entry point
-dbConnectAndStartServer();
-
   app.use(
     "/graphql",
     graphqlHTTP({
       schema,
       rootValue: resolvers,
-      dbConnectAndStartServer
+      // context
     })
   );
 
@@ -97,4 +81,17 @@ dbConnectAndStartServer();
   });
 };
 
+// Connecting to DB and then start the server
+const dbConnectAndStartServer = async () => {
+  try {
+    await connectToDB();
+    console.log('Connected to Mongo successfully');
+    startServer();
+  } catch (err) {
+    console.error(`Error connecting to mongo - ${err.message}`);
+    process.exit(1);
+  }
+};
 
+// Entry point
+dbConnectAndStartServer();
