@@ -23,6 +23,7 @@ const startServer = async () => {
       users: [User]
     }
 
+
     type Mutation {
       addUser(input: UserInput): User
     }
