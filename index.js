@@ -3,7 +3,7 @@ import bodyParser from 'body-parser';
 import graphqlHTTP  from "express-graphql";
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import { makeExecutableSchema } from 'graphql-tools';
-const expressPlayground = require("graphql-playground-middleware-express").default;
+import expressPlayground from "graphql-playground-middleware-express";
 
 import { connectToDB } from './database';
 
